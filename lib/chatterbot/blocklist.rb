@@ -22,8 +22,9 @@ module Chatterbot
     end
 
     #
-    # Based on the text of this tweet, should it be skipped?
+    # Based on the text of this tweet or media, should it be skipped?
     def skip_me?(s)
+      return false if s.respond_to?(:media) && !s.media.empty?
       search = s.respond_to?(:text) ? s.text : s
       exclude.detect { |e| search.downcase.include?(e) } != nil
     end
